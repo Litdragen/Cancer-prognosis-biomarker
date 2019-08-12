@@ -1,18 +1,6 @@
 #!/usr/bin/perl -w
 =head1 #===============================================================================
 #        USAGE: perl Consencus_biomarker_extract.pl Single_cox_sig_exp.mat Single_cox_sig_outcome_corelation.mat DEG.txt > Single_cox_sig_exp.filt.mat 
-#
-#  DESCRIPTION: 
-#
-#  INPUT FILES: 
-#
-# REQUIREMENTS:
-#        NOTES: None
-#       AUTHOR: Xiaolong Zhang, zhangxiaol1@sysucc.org.cn
-# ORGANIZATION: Bioinformatics Center, Sun Yat-sen University Cancer Center
-#      VERSION: 1.0
-#      CREATED: //2017
-#     REVISION: ---
 #===============================================================================
 =cut
 die `pod2text $0` unless @ARGV == 3;
