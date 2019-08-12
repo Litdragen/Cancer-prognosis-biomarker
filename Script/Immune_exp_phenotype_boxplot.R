@@ -1,0 +1,36 @@
+# Rscript Immune_cell_component_phenotype_boxplot.R Immune_cell_component.mat Selected_phenotype.txt [outdir]
+args = commandArgs(T)
+library(ggpubr)
+library(reshape2)
+#all_exp <- read.table("/disk/zxl/projects/Lasso_marker/TCGA_Liver_Cancer/1.DEG/All_sample_normalized_count.deseq.mat", header = T, row.names = 1)
+#marker_exp <- read.table("/disk/zxl/projects/Lasso_marker/TCGA_Liver_Cancer/2.OS/2.Marker_extract/Lasso_marker_exp.txt", header = T, row.names = 1)
+#anno <- read.table("/disk/zxl/projects/Lasso_marker/TCGA_Liver_Cancer/1.DEG/Sample_info.txt", header = T)
+all_exp <- read.table(args[1], header = T, row.names = 1)
+anno <- read.table(args[2], header = T, row.names = 1, sep = "\t", na.strings = "")
+anno = anno[colnames(all_exp),]
+if(is.na(args[3])){
+  outdir = "."
+}else{
+  outdir = args[3]
+}
+
+exp = t(all_exp)
+pdf(paste(outdir, "/Immune_cell_component_phenotype_boxplot.pdf", sep = ""), height = 7, width = 14)
+for (i in 1:ncol(anno)){
+  anno_tmp = data.frame(anno[, i], row.names = rownames(anno))
+  colnames(anno_tmp)[1] = "Type"
+  exp2 = cbind(exp, anno_tmp)
+  exp2 = na.omit(exp2)
+  exp_melt = melt(exp2)
+  exp_melt$value_log = log2(exp_melt$value+1)
+  print(ggboxplot(exp_melt, x = "variable", y = "value_log", color = "Type", palette = "jco",
+                  add = "jitter", xlab = F, ylab = "log2(normalized reads count + 1)", title = colnames(anno)[i]) +
+          theme(axis.text.x  = element_text(angle=45, vjust = 0.9, hjust = 1)) +
+          stat_compare_means(aes(group = Type), label = "p.signif"))
+  print(ggboxplot(exp_melt, x = "variable", y = "value_log", color = "Type", palette = "jco",
+                  add = "jitter", xlab = F, ylab = "log2(normalized reads count + 1)", title = colnames(anno)[i]) +
+          theme(axis.text.x  = element_text(angle=45, vjust = 0.9, hjust = 1)) +
+          stat_compare_means(aes(group = Type), label = "p.format"))
+}
+dev.off()
+
