@@ -1,18 +1,6 @@
 #!/usr/bin/perl -w
 =head1 #===============================================================================
 #        USAGE: perl Clinical_stat.pl Selected_clinic_info.txt
-#
-#  DESCRIPTION: 
-#
-#  INPUT FILES: 
-#
-# REQUIREMENTS:
-#        NOTES: None
-#       AUTHOR: Xiaolong Zhang, zhangxiaol1@sysucc.org.cn
-# ORGANIZATION: Bioinformatics Center, Sun Yat-sen University Cancer Center
-#      VERSION: 1.0
-#      CREATED: //2017
-#     REVISION: ---
 #===============================================================================
 =cut
 die `pod2text $0` unless @ARGV == 1;
